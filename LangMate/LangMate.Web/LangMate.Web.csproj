@@ -15,4 +15,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LangMate.Data\LangMate.Data.csproj" />
+    <ProjectReference Include="..\LangMate.Services\LangMate.Services.csproj" />
+  </ItemGroup>
+
 </Project>
