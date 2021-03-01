@@ -10,10 +10,14 @@ namespace LangMate.Web.Controllers
 	public class UsersController : Controller
 	{
 		private readonly UserManager<LangMateUser> userManager;
+		private readonly SignInManager<LangMateUser> signInManager;
 
-		public UsersController(UserManager<LangMateUser> userManager)
+		public UsersController(
+			UserManager<LangMateUser> userManager,
+			SignInManager<LangMateUser> signInManager)
 		{
 			this.userManager = userManager;
+			this.signInManager = signInManager;
 		}
 
 		public IActionResult Register()
@@ -27,9 +31,10 @@ namespace LangMate.Web.Controllers
 		}
 
 		[HttpPost]	
-		public IActionResult Logout()
+		public async Task<IActionResult> Logout()
 		{
-			return this.View();
+			await signInManager.SignOutAsync();
+			return RedirectToAction(nameof(Login));
 		}
 		[HttpPost] 
 		public async Task<IActionResult> Register(RegisterViewModel viewModel)
@@ -62,5 +67,23 @@ namespace LangMate.Web.Controllers
 
             return this.RedirectToAction(nameof(Login));
         }
+		[HttpPost]
+		public async Task<IActionResult> Login(LoginViewModel viewModel)
+		{
+			if (ModelState.IsValid == false)
+			{
+				return this.View(viewModel);
+			}
+
+			var result = await signInManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, viewModel.RememberMe, true);
+
+			if (result.Succeeded == false)
+			{
+				TempData[GlobalConstants.Errors.InvalidLoginCredentials] = GlobalConstants.Errors.InvalidLoginCredentials;
+				return this.View();
+			}
+
+			return this.Redirect("/Home/Index");
+		}
 	}
 }

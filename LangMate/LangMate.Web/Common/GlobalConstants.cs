@@ -5,6 +5,7 @@
 		public static class Errors
 		{
 			public const string UserAlreadyExists = "User already exists!";
+			public const string InvalidLoginCredentials = "Invalid login credentials!";
 		}
 	}
 }
