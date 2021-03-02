@@ -1,14 +1,10 @@
-﻿using LangMate.Data.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LangMate.Data
+﻿namespace LangMate.Data
 {
+	using LangMate.Data.Models;
+
+	using Microsoft.EntityFrameworkCore;
+	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 	public class LangMateDbContext : IdentityDbContext<LangMateUser, LangMateRole, string>
 	{
 		public LangMateDbContext(DbContextOptions options) : base(options)

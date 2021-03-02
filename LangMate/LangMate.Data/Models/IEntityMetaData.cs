@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LangMate.Data.Models
+﻿namespace LangMate.Data.Models
 {
+	using System;
+
 	public interface IEntityMetaData
 	{
 		public DateTime CreatedOn { get; set; }

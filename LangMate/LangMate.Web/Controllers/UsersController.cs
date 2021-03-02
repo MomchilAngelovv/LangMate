@@ -1,12 +1,14 @@
-﻿using LangMate.Data.Models;
-using LangMate.Web.Common;
-using LangMate.Web.Models.Users;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-namespace LangMate.Web.Controllers
+﻿namespace LangMate.Web.Controllers
 {
+	using System.Threading.Tasks;
+
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Identity;
+
+	using LangMate.Web.Common;
+	using LangMate.Data.Models;
+	using LangMate.Web.Models.Users;
+
 	public class UsersController : Controller
 	{
 		private readonly UserManager<LangMateUser> userManager;
@@ -20,22 +22,22 @@ namespace LangMate.Web.Controllers
 			this.signInManager = signInManager;
 		}
 
+		[HttpGet]
 		public IActionResult Register()
 		{
 			return this.View();
 		}
-
+		[HttpGet]
 		public IActionResult Login()
 		{
 			return this.View();
 		}
-
-		[HttpPost]	
-		public async Task<IActionResult> Logout()
+		[HttpGet]
+		public IActionResult Profile()
 		{
-			await signInManager.SignOutAsync();
-			return RedirectToAction(nameof(Login));
+			return this.View();
 		}
+
 		[HttpPost] 
 		public async Task<IActionResult> Register(RegisterViewModel viewModel)
 		{
@@ -84,6 +86,12 @@ namespace LangMate.Web.Controllers
 			}
 
 			return this.Redirect("/Home/Index");
+		}
+		[HttpPost]
+		public async Task<IActionResult> Logout()
+		{
+			await signInManager.SignOutAsync();
+			return RedirectToAction(nameof(Login));
 		}
 	}
 }

@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LangMate.Data.Models
+﻿namespace LangMate.Data.Models
 {
+	using System;
+
+	using Microsoft.AspNetCore.Identity;
+
 	public class LangMateRole : IdentityRole<string>, IEntityMetaData
 	{
 		public LangMateRole()
