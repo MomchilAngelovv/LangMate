@@ -64,6 +64,7 @@ namespace LangMate.Web
 			//Services
 			services.AddTransient<IAsyncHttpClient, AsyncHttpClient>();
 			services.AddTransient<ILanguagesService, LanguagesService>();
+			services.AddTransient<IAuthService, AuthService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

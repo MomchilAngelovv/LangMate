@@ -25,11 +25,6 @@ namespace LangMate.Web.Common.AsyncHttpClient
             {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(url),
-                Headers =
-                {
-                    { "x-rapidapi-key", "6c01749c84mshd87345a43cae61cp18b915jsne8b54cbda4ce" },
-                    { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
-                },
             };
 
 			if (headers != null)
