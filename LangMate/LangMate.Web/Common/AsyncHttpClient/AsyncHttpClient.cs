@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace LangMate.Web.Common.AsyncHttpClient
+﻿namespace LangMate.Web.Common.AsyncHttpClient
 {
+	using System;
+	using System.Net.Http;
+	using System.Text.Json;
+	using System.Threading.Tasks;
+	using System.Collections.Generic;
+
 	public class AsyncHttpClient : IAsyncHttpClient
 	{
 		private readonly IHttpClientFactory httpClientFactory;
@@ -27,13 +26,7 @@ namespace LangMate.Web.Common.AsyncHttpClient
 				RequestUri = new Uri(url),
 			};
 
-			if (headers != null)
-			{
-				foreach (var header in headers)
-				{
-					request.Headers.Add(header.Key, header.Value);
-				}
-			}
+			this.InsertHeadersInRequest(request, headers);
 
 			using var response = await httpClient.SendAsync(request);
 
@@ -42,15 +35,8 @@ namespace LangMate.Web.Common.AsyncHttpClient
 				//throw error maybe...
 			}
 
-			var responseBody = await response.Content.ReadAsStringAsync();
-			var options = new JsonSerializerOptions
-			{
-				AllowTrailingCommas = true,
-				PropertyNameCaseInsensitive = true,
-			};
-
-			var mappedData = JsonSerializer.Deserialize<T>(responseBody, options);
-			return mappedData;
+			var mappedResponseData = await this.MapResponseToModelAsyncc<T>(response);
+			return mappedResponseData;
 		}
 
 		public async Task<T> PostAsync<T>(string url, Dictionary<string, string> headers = null, Dictionary<string, string> bodyData = null, string contentType = "application/json")
@@ -62,18 +48,11 @@ namespace LangMate.Web.Common.AsyncHttpClient
 				RequestUri = new Uri(url),
 			};
 
-			if (headers != null)
-			{
-				foreach (var header in headers)
-				{
-					request.Headers.Add(header.Key, header.Value);
-				}
-			}
+			this.InsertHeadersInRequest(request, headers);
 
 			if (bodyData != null)
 			{
 				request.Content = new FormUrlEncodedContent(bodyData);
-
 			}
 
 			using var response = await client.SendAsync(request);
@@ -83,6 +62,23 @@ namespace LangMate.Web.Common.AsyncHttpClient
 				//throw error maybe...
 			}
 
+			var mappedResponseData = await this.MapResponseToModelAsyncc<T>(response);
+			return mappedResponseData;
+		}
+
+		private void InsertHeadersInRequest(HttpRequestMessage request, Dictionary<string, string> headers)
+		{
+			if (headers != null)
+			{
+				foreach (var header in headers)
+				{
+					request.Headers.Add(header.Key, header.Value);
+				}
+			}
+		}
+
+		private async Task<T> MapResponseToModelAsyncc<T>(HttpResponseMessage response)
+		{
 			var responseBody = await response.Content.ReadAsStringAsync();
 			var options = new JsonSerializerOptions
 			{
