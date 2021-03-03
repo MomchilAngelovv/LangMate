@@ -1,1 +1,11 @@
 ﻿<h1>Profile page. Empty for now</h1>
+<button id="get-languages-btn" class="btn btn-success">Get possible languages</button>
+
+@section Scripts{ 
+	<script>
+		$('#get-languages-btn').click(() => {
+			console.log(1)
+			$.post('/seeder/languages')
+		})
+	</script>
+}

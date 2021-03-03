@@ -10,6 +10,7 @@ namespace LangMate.Web
 
 	using LangMate.Data;
 	using LangMate.Data.Models;
+	using LangMate.Web.Common.AsyncHttpClient;
 
 	public class Startup
 	{
@@ -57,8 +58,10 @@ namespace LangMate.Web
 			services.AddDatabaseDeveloperPageExceptionFilter();
 			services.AddControllersWithViews();
 			services.AddRazorPages();
+			services.AddHttpClient();
 
 			//Services
+			services.AddTransient<IAsyncHttpClient, AsyncHttpClient>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
