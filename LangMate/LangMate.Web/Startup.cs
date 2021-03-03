@@ -11,6 +11,7 @@ namespace LangMate.Web
 	using LangMate.Data;
 	using LangMate.Data.Models;
 	using LangMate.Web.Common.AsyncHttpClient;
+	using LangMate.Services;
 
 	public class Startup
 	{
@@ -62,6 +63,7 @@ namespace LangMate.Web
 
 			//Services
 			services.AddTransient<IAsyncHttpClient, AsyncHttpClient>();
+			services.AddTransient<ILanguagesService, LanguagesService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

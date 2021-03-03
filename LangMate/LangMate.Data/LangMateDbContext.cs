@@ -10,5 +10,7 @@
 		public LangMateDbContext(DbContextOptions options) : base(options)
 		{
 		}
+
+		public DbSet<Language> Languages { get; set; }
 	}
 }

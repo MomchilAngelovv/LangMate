@@ -4,14 +4,16 @@ using LangMate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LangMate.Data.Migrations
 {
     [DbContext(typeof(LangMateDbContext))]
-    partial class LangMateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210303003251_Add_Languages_Table")]
+    partial class Add_Languages_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
