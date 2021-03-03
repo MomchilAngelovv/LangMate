@@ -17,15 +17,15 @@ namespace LangMate.Web.Common.AsyncHttpClient
 			this.httpClientFactory = httpClientFactory;
 		}
 
-		public async Task<T> GetAsync<T>(string url, Dictionary<string,string> headers = null)
+		public async Task<T> GetAsync<T>(string url, Dictionary<string, string> headers = null)
 		{
-            var httpClient = this.httpClientFactory.CreateClient();
+			var httpClient = this.httpClientFactory.CreateClient();
 
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(url),
-            };
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Get,
+				RequestUri = new Uri(url),
+			};
 
 			if (headers != null)
 			{
@@ -36,6 +36,47 @@ namespace LangMate.Web.Common.AsyncHttpClient
 			}
 
 			using var response = await httpClient.SendAsync(request);
+
+			if (response.IsSuccessStatusCode == false)
+			{
+				//throw error maybe...
+			}
+
+			var responseBody = await response.Content.ReadAsStringAsync();
+			var options = new JsonSerializerOptions
+			{
+				AllowTrailingCommas = true,
+				PropertyNameCaseInsensitive = true,
+			};
+
+			var mappedData = JsonSerializer.Deserialize<T>(responseBody, options);
+			return mappedData;
+		}
+
+		public async Task<T> PostAsync<T>(string url, Dictionary<string, string> headers = null, Dictionary<string, string> bodyData = null, string contentType = "application/json")
+		{
+			var client = new HttpClient();
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = new Uri(url),
+			};
+
+			if (headers != null)
+			{
+				foreach (var header in headers)
+				{
+					request.Headers.Add(header.Key, header.Value);
+				}
+			}
+
+			if (bodyData != null)
+			{
+				request.Content = new FormUrlEncodedContent(bodyData);
+
+			}
+
+			using var response = await client.SendAsync(request);
 
 			if (response.IsSuccessStatusCode == false)
 			{
