@@ -1,18 +1,17 @@
-﻿using LangMate.Data.Models;
-using LangMate.Services;
-using LangMate.Web.Common;
-using LangMate.Web.Common.AsyncHttpClient;
-using LangMate.Web.Models.ExternalApisResponses;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace LangMate.Web.Controllers
+﻿namespace LangMate.Web.Controllers
 {
+	using System.Linq;
+	using System.Threading.Tasks;
+
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Identity;
+
+	using LangMate.Services;
+	using LangMate.Web.Common;
+	using LangMate.Data.Models;
+	using LangMate.Web.Common.AsyncHttpClient;
+	using LangMate.Web.Models.ExternalApisResponses;
+
 	public class SeederController : Controller
 	{
 		private readonly UserManager<LangMateUser> userManager;
