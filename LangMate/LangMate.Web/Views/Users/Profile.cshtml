@@ -1,11 +1,15 @@
 ﻿<h1>Profile page. Empty for now</h1>
-<button id="get-languages-btn" class="btn btn-success">Get possible languages</button>
+<button id="seed-languages-btn" class="btn btn-success">Seed languages</button>
+<button id="seed-roles-btn" class="btn btn-success">Seed roles and make default admin</button>
 
 @section Scripts{ 
 	<script>
-		$('#get-languages-btn').click(() => {
-			console.log(1)
+		$('#seed-languages-btn').click(() => {
 			$.post('/seeder/languages')
+		})
+
+		$('#seed-roles-btn').click(() => {
+			$.post('/seeder/roles')
 		})
 	</script>
 }

@@ -67,6 +67,7 @@
                 return this.View(viewModel);
             }
 
+			await this.userManager.AddToRoleAsync(newUser, GlobalConstants.Roles.User);
             return this.RedirectToAction(nameof(Login));
         }
 		[HttpPost]
