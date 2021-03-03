@@ -1,14 +1,16 @@
 ﻿namespace LangMate.Web.Controllers
 {
-	using LangMate.Services;
-	using LangMate.Web.Common.AsyncHttpClient;
-	using LangMate.Web.Models.ExternalApisResponses;
-	using LangMate.Web.Models.Home;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.Extensions.Logging;
-	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
+	using System.Collections.Generic;
+
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.Extensions.Logging;
+
+	using LangMate.Services;
+	using LangMate.Web.Models.Home;
+	using LangMate.Web.Common.AsyncHttpClient;
+	using LangMate.Web.Models.ExternalApisResponses;
 
 	public class HomeController : Controller
 	{
@@ -54,10 +56,12 @@
 				["target"] = viewModel.LanguageTo
 			};
 
-			var translatedTextResponse = await this.httpClient.PostAsync<TranslatedTextResponseModel>("https://google-translate1.p.rapidapi.com/language/translate/v2", rapidApiAuthHeaders, requestData);
+			var translatedTextResponse = await this.httpClient
+				.PostAsync<TranslatedTextResponseModel>("https://google-translate1.p.rapidapi.com/language/translate/v2", rapidApiAuthHeaders, requestData);
 
 			viewModel.TextTo = translatedTextResponse.Data.Translations.ToList().First().TranslatedText;
 			viewModel.TranslateSuccess = true;
+
 			return this.View(viewModel);
 		}
 	}
