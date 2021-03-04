@@ -26,7 +26,7 @@
 				RequestUri = new Uri(url),
 			};
 
-			this.InsertHeadersInRequest(request, headers);
+			InsertHeadersInRequest(request, headers);
 
 			using var response = await httpClient.SendAsync(request);
 
@@ -35,8 +35,8 @@
 				//throw error maybe...
 			}
 
-			var mappedResponseData = await this.MapResponseToModelAsyncc<T>(response);
-			return mappedResponseData;
+			var dataModel = await MapResponseToModelAsync<T>(response);
+			return dataModel;
 		}
 
 		public async Task<T> PostAsync<T>(string url, Dictionary<string, string> headers = null, Dictionary<string, string> bodyData = null, string contentType = "application/json")
@@ -48,7 +48,7 @@
 				RequestUri = new Uri(url),
 			};
 
-			this.InsertHeadersInRequest(request, headers);
+			InsertHeadersInRequest(request, headers);
 
 			if (bodyData != null)
 			{
@@ -62,11 +62,11 @@
 				//throw error maybe...
 			}
 
-			var mappedResponseData = await this.MapResponseToModelAsyncc<T>(response);
-			return mappedResponseData;
+			var dataModel = await MapResponseToModelAsync<T>(response);
+			return dataModel;
 		}
 
-		private void InsertHeadersInRequest(HttpRequestMessage request, Dictionary<string, string> headers)
+		private static void InsertHeadersInRequest(HttpRequestMessage request, Dictionary<string, string> headers)
 		{
 			if (headers != null)
 			{
@@ -77,9 +77,10 @@
 			}
 		}
 
-		private async Task<T> MapResponseToModelAsyncc<T>(HttpResponseMessage response)
+		private static async Task<T> MapResponseToModelAsync<T>(HttpResponseMessage response)
 		{
 			var responseBody = await response.Content.ReadAsStringAsync();
+
 			var options = new JsonSerializerOptions
 			{
 				AllowTrailingCommas = true,
